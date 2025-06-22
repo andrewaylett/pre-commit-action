@@ -1,0 +1,13 @@
+{
+  "extends": ["config:recommended", "github>andrewaylett/renovate-config", ":assignAndReview(andrewaylett)"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.pre-commit-hooks.yaml$/"],
+      "matchStrings": ["default: \"(?<currentValue>\\d+\\..+?)\""],
+      "depNameTemplate": "pre-commit",
+      "datasourceTemplate": "pip",
+      "versioningTemplate": "pep440"
+    }
+  ]
+}

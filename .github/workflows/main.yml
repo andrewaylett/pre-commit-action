@@ -1,13 +1,17 @@
 on:
   pull_request:
   push:
-    branches: [main, test-me-*]
+    branches: [main, test-me-*, renovate/*]
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        cache: pip
+        python-version-file: .python-version
+        cache-dependency-path: action.yml
     - name: self test action
       uses: ./

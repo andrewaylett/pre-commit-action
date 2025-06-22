@@ -1,0 +1,5 @@
+formatter:
+  type: basic
+  indentless_arrays: true
+  retain_line_breaks_single: true
+  line_breaks: lf
