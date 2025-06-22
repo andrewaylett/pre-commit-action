@@ -1,0 +1,10 @@
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+ij_yaml_indent_sequence_value = false
+
+[*.md]
+indent_size = unset
