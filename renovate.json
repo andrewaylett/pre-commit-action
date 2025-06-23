@@ -1,12 +1,16 @@
 {
-  "extends": ["config:recommended", "github>andrewaylett/renovate-config", ":assignAndReview(andrewaylett)"],
+  "extends": [
+    "config:recommended",
+    "github>andrewaylett/renovate-config",
+    ":assignAndReview(andrewaylett)"
+  ],
   "customManagers": [
     {
       "customType": "regex",
       "managerFilePatterns": ["action.yml"],
       "matchStrings": ["default: '(?<currentValue>\\d+\\..+?)'"],
       "depNameTemplate": "pre-commit",
-      "datasourceTemplate": "pip",
+      "datasourceTemplate": "pypi",
       "versioningTemplate": "pep440"
     }
   ]
