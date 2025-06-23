@@ -3,8 +3,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^\\.pre-commit-hooks.yaml$/"],
-      "matchStrings": ["default: \"(?<currentValue>\\d+\\..+?)\""],
+      "managerFilePatterns": ["action.yaml"],
+      "matchStrings": ["default: '(?<currentValue>\\d+\\..+?)'"],
       "depNameTemplate": "pre-commit",
       "datasourceTemplate": "pip",
       "versioningTemplate": "pep440"
