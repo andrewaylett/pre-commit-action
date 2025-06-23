@@ -18,6 +18,8 @@ runs:
   - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
     with:
       path: ~/.cache/pre-commit
-      key: pre-commit-${ inputs.pre_commit_version }|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      key: pre-commit-${{ inputs.pre_commit_version }}|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      restore-keys: |
+        pre-commit-${{ inputs.pre_commit_version }}|${{ env.pythonLocation }}|
   - run: uvx --isolated --with 'pre-commit==${{ inputs.pre_commit_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
     shell: bash
