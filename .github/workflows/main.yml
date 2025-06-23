@@ -39,8 +39,8 @@ jobs:
 
         # Get the current release count
         git fetch --tags
-        RELEASE_COUNT="$(git tag | grep -c "^v$PRE_COMMIT_VERSION-" || echo -n "0")"
-        RELEASE_COUNT="$((RELEASE_COUNT + 1))"
+        RELEASE_COUNT=$(git tag | grep -c "^v$PRE_COMMIT_VERSION-" 2>/dev/null || echo "0" | tr -d '\n')
+        RELEASE_COUNT=$((RELEASE_COUNT + 1))
 
         # Create and push the new tag with v prefix
         NEW_TAG="v$PRE_COMMIT_VERSION-$RELEASE_COUNT"
