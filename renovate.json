@@ -3,7 +3,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["action.yaml"],
+      "managerFilePatterns": ["action.yml"],
       "matchStrings": ["default: '(?<currentValue>\\d+\\..+?)'"],
       "depNameTemplate": "pre-commit",
       "datasourceTemplate": "pip",
