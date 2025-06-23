@@ -8,7 +8,7 @@ inputs:
   pre_commit_version:
     description: the version of pre-commit to use
     required: false
-    default: '4.1.0'
+    default: '4.2.0'
 runs:
   using: composite
   steps:
