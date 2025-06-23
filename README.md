@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: andrewaylett/pre-commit-action@v0
+    - uses: andrewaylett/pre-commit-action@v4
 ```
 
 This does a few things:
@@ -38,10 +38,13 @@ Here's a sample step configuration that only runs the `flake8` hook against all
 the files (use the template above except for the `pre-commit` action):
 
 ```yaml
-    - uses: andrewaylett/pre-commit-action@v0
+    - uses: andrewaylett/pre-commit-action@v4
       with:
         extra_args: flake8 --all-files
 ```
+
+Note that the `--all-files` flag is specified as a default extra argument,
+and needs to be re-added if the default is overridden.
 
 ## History
 
@@ -51,3 +54,13 @@ authors of pre-commit until they started their own CI service.
 Having not found https://pre-commit.ci to be suitable for my use-cases, I have
 continued to use the out-of-support GitHub Action.  It still works, but the
 warnings (and outdated dependencies) make me prefer to maintain my own fork.
+
+## Maintenance
+
+Renovate will bump versions of tools that this project depends on.
+Once that's working properly, it includes bumping the default pre-commit version in actions.yaml.
+The main GitHub actions workflow tags each commit to `main` with the version of pre-commit that's in use
+and a counter to keep track of releases of that version number.
+
+I recommend consumers use [Mend Renovate](https://www.mend.io/mend-renovate/) or similar to pin to specific commits,
+but the Actions workflow will maintain a major version tag that you may use if you prefer.
