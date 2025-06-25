@@ -8,8 +8,16 @@
     {
       "customType": "regex",
       "managerFilePatterns": ["action.yml"],
-      "matchStrings": ["default: '(?<currentValue>\\d+\\..+?)'"],
+      "matchStrings": ["pre_commit_version:.*?default: '(?<currentValue>\\d+\\..+?)'"],
       "depNameTemplate": "pre-commit",
+      "datasourceTemplate": "pypi",
+      "versioningTemplate": "pep440"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["action.yml"],
+      "matchStrings": ["uv_version:.*?default: '(?<currentValue>\\d+\\..+?)'"],
+      "depNameTemplate": "uv",
       "datasourceTemplate": "pypi",
       "versioningTemplate": "pep440"
     }
