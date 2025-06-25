@@ -18,6 +18,7 @@ jobs:
       if: github.ref == 'refs/heads/main'
       id: check_changes
       run: |
+        set -eu
         # Get the list of changed files
         git fetch origin main
         CHANGED_FILES=$(git diff --name-only HEAD^..HEAD)
@@ -34,6 +35,7 @@ jobs:
     - name: Create tag
       if: github.ref == 'refs/heads/main' && steps.check_changes.outputs.action_yml_changed == 'true'
       run: |
+        set -euo pipefail
         # Extract pre-commit version from action.yml
         PRE_COMMIT_VERSION=$(grep "pre_commit_version:" -A 3 action.yml | grep "default:" | sed "s/.*default: '\(.*\)'.*/\1/")
 
