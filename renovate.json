@@ -6,17 +6,21 @@
   ],
   "customManagers": [
     {
-      "customType": "regex",
+      "customType": "jsonata",
+      "fileFormat": "yaml",
       "managerFilePatterns": ["action.yml"],
-      "matchStrings": ["pre_commit_version:.*?default: '(?<currentValue>\\d+\\..+?)'"],
+      "matchStrings": [
+        "inputs.pre_commit_version.{ \"currentValue\": default }"
+      ],
       "depNameTemplate": "pre-commit",
       "datasourceTemplate": "pypi",
       "versioningTemplate": "pep440"
     },
     {
-      "customType": "regex",
+      "customType": "jsonata",
+      "fileFormat": "yaml",
       "managerFilePatterns": ["action.yml"],
-      "matchStrings": ["uv_version:.*?default: '(?<currentValue>\\d+\\..+?)'"],
+      "matchStrings": ["inputs.uv_version.{ \"currentValue\": default }"],
       "depNameTemplate": "uv",
       "datasourceTemplate": "pypi",
       "versioningTemplate": "pep440"
