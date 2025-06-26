@@ -1,0 +1,41 @@
+on:
+  push:
+    branches: [main]
+    paths: [action.yml]
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+    - name: self test action
+      uses: ./
+
+    - name: Create tag
+      run: |
+        set -euo pipefail
+        # Extract pre-commit version from action.yml
+        PRE_COMMIT_VERSION=$(grep "pre_commit_version:" -A 3 action.yml | grep "default:" | sed "s/.*default: '\(.*\)'.*/\1/")
+
+        # Get the current release count
+        git fetch --tags
+        RELEASE_COUNT=$(git tag | grep -c "^v$PRE_COMMIT_VERSION-" || true | tr -d '\n')
+
+        # Create and push the new tag with v prefix
+        NEW_TAG="v$PRE_COMMIT_VERSION-$RELEASE_COUNT"
+        echo "Creating new tag: $NEW_TAG"
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git tag "$NEW_TAG"
+
+        # Extract major version and update major version tag
+        MAJOR_VERSION=$(echo "$PRE_COMMIT_VERSION" | cut -d. -f1)
+        MAJOR_TAG="v$MAJOR_VERSION"
+        echo "Updating major version tag: $MAJOR_TAG"
+        git tag -f "$MAJOR_TAG"
+
+        # Push both tags
+        git push origin "$NEW_TAG"
+        git push -f origin "$MAJOR_TAG"
