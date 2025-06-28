@@ -1,5 +1,5 @@
-name: Run Pre-Commit
-description: Validates that your commit passes all its pre-commit rules
+name: Cached Pre-Commit
+description: Validates that your commit passes all its pre-commit rules, with caching from uv.
 author: Andrew Aylett
 inputs:
   extra_args:
