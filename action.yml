@@ -10,6 +10,10 @@ inputs:
     description: the version of pre-commit to use
     required: false
     default: '4.2.0'
+  pre_commit_uv_version:
+    description: the version of pre-commit-uv to use
+    required: false
+    default: '4.1.4'
   uv_version:
     description: the version of uv to use
     required: false
@@ -20,20 +24,23 @@ runs:
   - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
     with:
       path: ~/.cache/pre-commit
-      key: pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      key: pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|${{ inputs.pre_commit_uv_version }}|${{ hashFiles('.pre-commit-config.yaml') }}
       restore-keys: |
+        pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|${{ inputs.pre_commit_uv_version }}|
         pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|
         pre-commit-${{ inputs.pre_commit_version }}|
         pre-commit-
   - uses: astral-sh/setup-uv@bd01e18f51369d5a26f1651c3cb451d3417e3bba # v6
+    id: uv
     with:
       enable-cache: false
       cache-local-path: ~/.cache/pre-commit/uv
       version: ${{ inputs.uv_version }}
   - run: |
       set -eu
-      uvx --isolated --with 'pre-commit==${{ inputs.pre_commit_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
-      uv cache prune --ci
+      ${{ steps.uv.outputs.uvx-path }} --isolated --from 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
+      ${{ steps.uv.outputs.uvx-path }} --isolated --from 'pre-commit==${{ inputs.pre_commit_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit gc
+      ${{ steps.uv.outputs.uv-path }}  cache prune --ci
     shell: bash
 branding:
   icon: check-circle
