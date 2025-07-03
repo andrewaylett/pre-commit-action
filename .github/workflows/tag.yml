@@ -9,11 +9,12 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: self test action
       uses: ./
 
     - name: Create tag
+      id: tag
       run: |
         set -euo pipefail
         # Extract pre-commit version from action.yml
@@ -39,3 +40,12 @@ jobs:
         # Push both tags
         git push origin "$NEW_TAG"
         git push -f origin "$MAJOR_TAG"
+
+        echo "new-tag=$NEW_TAG" >> "${GITHUB_OUTPUT}"
+
+    - name: Release
+      uses: softprops/action-gh-release@v2.3.2
+      with:
+        tag_name: ${{ steps.tag.outputs.new-tag }}
+        generate_release_notes: true
+        make_latest: true
