@@ -24,11 +24,9 @@ runs:
   - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
     with:
       path: ~/.cache/pre-commit
-      key: pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|${{ inputs.pre_commit_uv_version }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}|${{ github.action_ref }}|
       restore-keys: |
-        pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|${{ inputs.pre_commit_uv_version }}|
-        pre-commit-${{ inputs.pre_commit_version }}|${{ inputs.uv_version }}|
-        pre-commit-${{ inputs.pre_commit_version }}|
+        pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}|
         pre-commit-
   - uses: astral-sh/setup-uv@bd01e18f51369d5a26f1651c3cb451d3417e3bba # v6.3.1
     id: uv
@@ -38,9 +36,16 @@ runs:
       version: ${{ inputs.uv_version }}
   - run: |
       set -eu
-      ${{ steps.uv.outputs.uvx-path }} --isolated --from 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
-      ${{ steps.uv.outputs.uvx-path }} --isolated --from 'pre-commit==${{ inputs.pre_commit_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit gc
+      echo ::group::Ensure pre-commit environment
+      ${{ steps.uv.outputs.uv-path }} tool install 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv'
+      echo ::endgroup::
+      ${{ steps.uv.outputs.uv-path }} tool run --offline --from 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
+      echo ::group::Clean pre-commit cache
+      ${{ steps.uv.outputs.uv-path }} tool run --offline --from 'pre-commit==${{ inputs.pre_commit_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit gc
+      echo ::endgroup::
+      echo ::group::Clean uv cache
       ${{ steps.uv.outputs.uv-path }}  cache prune --ci
+      echo ::endgroup::
     shell: bash
 branding:
   icon: check-circle
