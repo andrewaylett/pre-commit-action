@@ -35,6 +35,7 @@ runs:
       cache-local-path: ~/.cache/pre-commit/uv
       version: ${{ inputs.uv_version }}
   - run: |
+      # Set up and execute pre-commit
       set -eu
       echo ::group::Ensure pre-commit environment
       ${{ steps.uv.outputs.uv-path }} tool install 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv'
