@@ -16,7 +16,7 @@ jobs:
     - name: Create tag
       id: tag
       run: |
-        set -euo pipefail
+        set -euxo pipefail
         # Extract pre-commit version from action.yml
         PRE_COMMIT_VERSION=$(grep "pre_commit_version:" -A 3 action.yml | grep "default:" | sed "s/.*default: '\(.*\)'.*/\1/")
 
