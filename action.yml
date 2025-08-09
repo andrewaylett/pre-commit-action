@@ -9,7 +9,7 @@ inputs:
   pre_commit_version:
     description: the version of pre-commit to use
     required: false
-    default: '4.2.0'
+    default: '4.3.0'
   pre_commit_uv_version:
     description: the version of pre-commit-uv to use
     required: false
