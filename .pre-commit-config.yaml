@@ -37,6 +37,6 @@ repos:
   - id: renovate-config-validator
     args: [--strict]
 - repo: https://github.com/andrewaylett/pre-commit-hooks
-  rev: v0.6.2
+  rev: v0.6.3
   hooks:
   - id: init-hooks
