@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
-    - uses: andrewaylett/pre-commit-action@00866801b63388e431b067b2671ee7c0498d8a55 # v4
+    - uses: andrewaylett/pre-commit-action@1cb390df03bdbe577fd9aa1de7ce8736150737a2 # v4
 ```
 
 This does a few things:
@@ -38,7 +38,7 @@ Here's a sample step configuration that only runs the `flake8` hook against all
 the files (use the template above except for the `pre-commit` action):
 
 ```yaml
-    - uses: andrewaylett/pre-commit-action@00866801b63388e431b067b2671ee7c0498d8a55 # v4
+    - uses: andrewaylett/pre-commit-action@1cb390df03bdbe577fd9aa1de7ce8736150737a2 # v4
       with:
         extra_args: flake8 --all-files
 ```
