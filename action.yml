@@ -35,16 +35,17 @@ runs:
       cache-local-path: ~/.cache/pre-commit/uv
       version: ${{ inputs.uv_version }}
   - run: |
+      # Set up and execute pre-commit
       set -eu
       echo ::group::Ensure pre-commit environment
       ${{ steps.uv.outputs.uv-path }} tool install 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv'
       echo ::endgroup::
-      ${{ steps.uv.outputs.uv-path }} tool run --offline --from 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
+      ${{ steps.uv.outputs.uv-path }} tool run --from 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit run --show-diff-on-failure --color=always ${{ inputs.extra_args }}
       echo ::group::Clean pre-commit cache
-      ${{ steps.uv.outputs.uv-path }} tool run --offline --from 'pre-commit==${{ inputs.pre_commit_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit gc
+      ${{ steps.uv.outputs.uv-path }} tool run --from 'pre-commit==${{ inputs.pre_commit_version }}' --with 'pre-commit-uv==${{ inputs.pre_commit_uv_version }}' --cache-dir '~/.cache/pre-commit/uv' pre-commit gc
       echo ::endgroup::
       echo ::group::Clean uv cache
-      ${{ steps.uv.outputs.uv-path }}  cache prune --ci
+      ${{ steps.uv.outputs.uv-path }} cache prune --ci
       echo ::endgroup::
     shell: bash
 branding:
