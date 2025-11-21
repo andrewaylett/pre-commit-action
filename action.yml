@@ -28,7 +28,7 @@ runs:
       restore-keys: |
         andrewaylett/pre-commit-action/${{ hashFiles('.pre-commit-config.yaml') }}/
         andrewaylett/pre-commit-action/
-  - uses: astral-sh/setup-uv@5a7eac68fb9809dea845d802897dc5c723910fa3 # v7.1.3
+  - uses: astral-sh/setup-uv@1e862dfacbd1d6d858c55d9b792c756523627244 # v7.1.4
     id: uv
     with:
       enable-cache: false
