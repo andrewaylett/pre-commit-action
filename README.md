@@ -20,7 +20,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
     - uses: andrewaylett/pre-commit-action@4d09f49107eaa6e1cf3b34c415cd622497ea7571 # v4
 ```
 
