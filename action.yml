@@ -17,7 +17,7 @@ inputs:
   uv_version:
     description: the version of uv to use
     required: false
-    default: '0.11.18'
+    default: '0.11.19'
 runs:
   using: composite
   steps:
