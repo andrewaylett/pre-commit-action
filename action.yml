@@ -18,6 +18,10 @@ inputs:
     description: the version of uv to use
     required: false
     default: '0.12.24'
+  npm_ignore_scripts:
+    description: skip npm lifecycle scripts (preinstall, postinstall, ...) when installing node-based hooks; set to 'false' if a hook needs them
+    required: false
+    default: 'true'
 runs:
   using: composite
   steps:
@@ -49,6 +53,7 @@ runs:
       echo ::endgroup::
     shell: bash
     env:
+      NPM_CONFIG_IGNORE_SCRIPTS: ${{ inputs.npm_ignore_scripts }}
       STEPS_UV_OUTPUTS_UV_PATH: ${{ steps.uv.outputs.uv-path }}
       INPUTS_PRE_COMMIT_VERSION: ${{ inputs.pre_commit_version }}
       INPUTS_PRE_COMMIT_UV_VERSION: ${{ inputs.pre_commit_uv_version }}

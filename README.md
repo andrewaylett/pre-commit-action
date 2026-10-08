@@ -16,11 +16,16 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      with:
+        persist-credentials: false
     - uses: andrewaylett/pre-commit-action@f1018a94e17a2122747e858f48185aed1a07bd75 # v4
 ```
 
@@ -28,6 +33,10 @@ This does a few things:
 
 - clones the code
 - sets up the `pre-commit` cache
+
+Hooks are third-party code, installed fresh from their package registries.
+Keep the job's token read-only, as above, so a compromised hook dependency
+can't push to your repository.
 
 ### using this action with custom invocations
 
@@ -45,6 +54,20 @@ the files (use the template above except for the `pre-commit` action):
 
 Note that the `--all-files` flag is specified as a default extra argument,
 and needs to be re-added if the default is overridden.
+
+### npm lifecycle scripts
+
+Node-based hooks are installed by `npm`, which would normally run any
+`preinstall`/`postinstall` scripts in the hook's whole dependency tree.  That is
+how npm supply-chain worms execute, so this action sets
+`NPM_CONFIG_IGNORE_SCRIPTS=true` by default.  If a hook genuinely needs its
+install scripts, opt out:
+
+```yaml
+    - uses: andrewaylett/pre-commit-action@86afe204f89a4e6885edf1233b17cefcb0021013 # v4
+      with:
+        npm_ignore_scripts: 'false'
+```
 
 ## History
 
