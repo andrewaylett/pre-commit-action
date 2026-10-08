@@ -3,17 +3,30 @@ on:
     branches: [main]
     paths: [action.yml]
 
+permissions:
+  contents: read
+
 jobs:
-  tag:
+  # The self test installs and runs third-party hooks, so it must never share a
+  # job with a token that can write to the repository.
+  test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: self test action
       uses: $/
+
+  tag:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: true
 
     - name: Create tag
       id: tag
