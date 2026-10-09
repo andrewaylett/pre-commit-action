@@ -10,8 +10,10 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - name: self test action
-      uses: ./
+      uses: $/
 
     - name: Create tag
       id: tag
@@ -44,8 +46,8 @@ jobs:
         echo "new-tag=$NEW_TAG" >> "${GITHUB_OUTPUT}"
 
     - name: Release
-      uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
-      with:
-        tag_name: ${{ steps.tag.outputs.new-tag }}
-        generate_release_notes: true
-        make_latest: true
+      run: |
+        gh release create "${NEW_TAG}" --generate-notes --latest --verify-tag
+      env:
+        GH_TOKEN: ${{ github.token }}
+        NEW_TAG: ${{ steps.tag.outputs.new-tag }}

@@ -17,10 +17,10 @@ repos:
   rev: v0.21.0
   hooks:
   - id: yamlfmt
-- repo: https://github.com/rhysd/actionlint
-  rev: v1.7.12
+- repo: https://github.com/jdx/jactionlint
+  rev: v1.8.2
   hooks:
-  - id: actionlint
+  - id: jactionlint
 - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
   rev: 3.11.1
   hooks:
@@ -37,6 +37,13 @@ repos:
   - id: renovate-config-validator
     args: [--strict]
 - repo: https://github.com/andrewaylett/pre-commit-hooks
-  rev: v0.7.2
+  rev: v0.9.0
   hooks:
   - id: init-hooks
+- repo: https://github.com/zizmorcore/zizmor-pre-commit
+  rev: v1.30.1
+  hooks:
+  - id: zizmor
+    args:
+    - --no-progress
+    - --fix=all
