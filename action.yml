@@ -17,7 +17,7 @@ inputs:
   uv_version:
     description: the version of uv to use
     required: false
-    default: '0.12.24'
+    default: '0.13.0'
   npm_ignore_scripts:
     description: skip npm lifecycle scripts (preinstall, postinstall, ...) when installing node-based hooks; set to 'false' if a hook needs them
     required: false
