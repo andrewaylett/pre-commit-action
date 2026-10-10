@@ -18,7 +18,7 @@ repos:
   hooks:
   - id: yamlfmt
 - repo: https://github.com/jdx/jactionlint
-  rev: v1.8.2
+  rev: v2.1.0
   hooks:
   - id: jactionlint
 - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
