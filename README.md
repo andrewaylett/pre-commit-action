@@ -26,7 +26,7 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         persist-credentials: false
-    - uses: andrewaylett/pre-commit-action@1f94b27618da0098a454255d7d2e15069c4ee91a # v4
+    - uses: andrewaylett/pre-commit-action@6fec84739cf6c7666c30b2675385b5ddd7ecc490 # v4
 ```
 
 This does a few things:
@@ -47,7 +47,7 @@ Here's a sample step configuration that only runs the `flake8` hook against all
 the files (use the template above except for the `pre-commit` action):
 
 ```yaml
-    - uses: andrewaylett/pre-commit-action@1f94b27618da0098a454255d7d2e15069c4ee91a # v4
+    - uses: andrewaylett/pre-commit-action@6fec84739cf6c7666c30b2675385b5ddd7ecc490 # v4
       with:
         extra_args: flake8 --all-files
 ```
@@ -64,7 +64,7 @@ how npm supply-chain worms execute, so this action sets
 install scripts, opt out:
 
 ```yaml
-    - uses: andrewaylett/pre-commit-action@1f94b27618da0098a454255d7d2e15069c4ee91a # v4
+    - uses: andrewaylett/pre-commit-action@6fec84739cf6c7666c30b2675385b5ddd7ecc490 # v4
       with:
         npm_ignore_scripts: 'false'
 ```
